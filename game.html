@@ -10,46 +10,42 @@
                 return "Scissors"
             }
         }
+
         function playRound (playerInput, computerInput) { //plays 1 round
             let playerSelection = playerInput.toLowerCase();
             let computerSelection = computerInput.toLowerCase();
-            switch (playerSelection, computerSelection) {
-                case (playerSelection == computerSelection):
-                    return "It's a tie!"
-                case (playerSelection == "rock") && (computerSelection == "scissors"):
-                case (playerSelection == "paper") && (computerSelection == "rock"):
-                case (playerSelection == "scissors") && (computerSelection == "paper"):
-                    return "You Win! " + convertString(playerSelection) + " beats " + convertString(computerSelection);
-                default:
-                    return "You Lose! " + convertString(computerSelection) + " beats " + convertString(playerSelection);
+            if (playerSelection == computerSelection) {
+                return "It's a tie!"
+            } else if (((playerSelection == "rock") && (computerSelection == "scissors")) || ((playerSelection == "paper") && (computerSelection == "rock")) || ((playerSelection == "scissors") && (computerSelection == "paper"))) {
+                return "You Win! " + convertString(playerSelection) + " beats " + convertString(computerSelection);
+            } else { 
+                return "You Lose! " + convertString(computerSelection) + " beats " + convertString(playerSelection);
             }
         }
+
         function convertString (selection) { //changes first letter in a string to uppercase
             return selection.charAt(0).toUpperCase() + selection.substring(1);
         }
+
         function game() {
             var playerScore = 0;
             var computerScore = 0;
             for (var i = 0; i < 5; i++) { // play 5 rounds
                 let playerInput = prompt();
                 let computerInput = computerPlay();
-                if (playRound(playerInput, computerInput) == "It's a tie") {
-                    return;
-                } else if (playRound(playerInput, computerInput).slice(0,8) == "You Win!") {
+                if (playRound(playerInput, computerInput).slice(0,8) == "You Win!") {
                     playerScore++;
-                    return;
-                } else {
+                } else if (playRound(playerInput, computerInput).slice(0,9) == "You Lose!") {
                     computerScore++;
-                    return;
                 }
                 console.log(playRound(playerInput, computerInput));
             }
             if (playerScore > computerScore) {
-                console.log("You win!");
+                console.log("You win the game!");
             } else if (computerScore > playerScore) {
-                console.log("You lose!");
+                console.log("You lose the game!");
             } else {
-                console.log("It's a tie!");
+                console.log("The game is a tie!");
             }
         }
     </script>
