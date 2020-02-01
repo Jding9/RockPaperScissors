@@ -1,0 +1,81 @@
+<html>
+    <div class="buttons">
+        <button id="rock">Rock</button>
+        <button id="paper">Paper</button>
+        <button id="scissors">Scissors</button>
+    </div>
+    <div>
+        <p id="printResults"></p>
+        <p id="printPlayerScore"></p>
+        <p id="printEnd"></p>
+    </div>
+
+    <script>
+        var playerScore = 0;
+        var computerScore = 0;
+        
+        function convertString (selection) { //changes first letter in a string to uppercase
+            return selection.charAt(0).toUpperCase() + selection.substring(1);
+        }
+
+        function computerPlay () { //returns either rock, paper, or scissors
+            let newNum = Math.random();
+            if (newNum > 2/3) {
+                return "Rock";
+            } else if (newNum > 1/3) {
+                return "Paper"
+            } else {
+                return "Scissors"
+            }
+        }
+
+        function playRound (playerInput, computerInput) { //plays 1 round
+            let playerSelection = playerInput.toLowerCase();
+            let computerSelection = computerInput.toLowerCase();
+            if (playerSelection == computerSelection) {
+                return "It's a tie!"
+            } else if (((playerSelection == "rock") && (computerSelection == "scissors")) || ((playerSelection == "paper") && (computerSelection == "rock")) || ((playerSelection == "scissors") && (computerSelection == "paper"))) {
+                playerScore += 1;
+                return "You Win! " + convertString(playerSelection) + " beats " + convertString(computerSelection);
+            } else { 
+                computerScore += 1;
+                return "You Lose! " + convertString(computerSelection) + " beats " + convertString(playerSelection);
+            }
+        }
+
+        document.getElementById("rock").addEventListener("click", function(){
+            var result = playRound ("rock", computerPlay());
+            var currentScore = "Player has " + playerScore + " points." + " Computer has " + computerScore + " points.";
+            document.getElementById("printResults").innerHTML = result;
+            document.getElementById("printPlayerScore").innerHTML = currentScore;
+            checkEnd();
+        })
+
+        document.getElementById("paper").addEventListener("click", function(){
+            var result = playRound ("paper", computerPlay());
+            var currentScore = "Player has " + playerScore + " points." + " Computer has " + computerScore + " points.";
+            document.getElementById("printResults").innerHTML = result;
+            document.getElementById("printPlayerScore").innerHTML = currentScore;
+            checkEnd();
+        })
+
+        document.getElementById("scissors").addEventListener("click", function(){
+            var result = playRound ("scissors", computerPlay());
+            var currentScore = "Player has " + playerScore + " points." + " Computer has " + computerScore + " points.";
+            document.getElementById("printResults").innerHTML = result;
+            document.getElementById("printPlayerScore").innerHTML = currentScore;
+            checkEnd();
+        })
+
+        function checkEnd() {
+            if (playerScore == 5) {
+                document.getElementById("printEnd").innerHTML = "Player wins!";
+            } else if (computerScore == 5) {
+                document.getElementById("printEnd").innerHTML = "Computer wins!";
+            } else {
+                document.getElementById("printEnd").innerHTML = "Keep playing!";
+            }
+        }
+
+    </script>
+</html>
